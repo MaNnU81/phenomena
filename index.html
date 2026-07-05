@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phenomena!</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ LOGIN SCREEN ============ -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-box">
+      <h1>PHENOMENA!</h1>
+      <p class="login-sub">Accedi con il tuo nickname</p>
+      <input id="loginNickname" type="text" placeholder="Nickname" autocomplete="username">
+      <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password">
+      <label class="remember-row">
+        <input type="checkbox" id="rememberMe" checked> resta collegato su questo dispositivo
+      </label>
+      <button id="loginBtn">Entra</button>
+      <p id="loginError" class="login-error"></p>
+    </div>
+  </div>
+
+  <!-- ============ APP SCREEN ============ -->
+  <div id="appScreen" class="app-screen" style="display:none;">
+
+    <div class="appbar">
+      <div class="brand">PHENOMENA!</div>
+      <select id="charSelect"></select>
+      <div class="spacer"></div>
+      <button class="logout" id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-view="home-view">Home (scheda)</button>
+      <button class="tab-btn" data-view="edit-view">Scheda editabile</button>
+    </div>
+
+    <!-- HOME VIEW -->
+    <div id="home-view" class="view active">
+      <div class="sheet-hint">visualizzazione grafica in arrivo — per ora dati in sola lettura</div>
+      <div id="homeSummary" class="home-summary"></div>
+    </div>
+
+    <!-- EDIT VIEW -->
+    <div id="edit-view" class="view">
+      <div class="sticky-header" id="stickyHeader">
+        <div>
+          <div class="name" id="stickyName">—</div>
+          <div class="meta" id="stickyMeta">—</div>
+        </div>
+        <div class="hp-san" id="stickyStats"></div>
+      </div>
+
+      <div class="mode-bar">
+        <label><input type="checkbox" id="creationMode"> Modalità creazione (sblocca tutti i campi)</label>
+        <span class="mode-badge game" id="modeBadge">MODALITÀ GIOCO</span>
+      </div>
+      <div id="readOnlyBanner" class="readonly-banner" style="display:none;">
+        Stai guardando il personaggio di un altro giocatore: sola lettura.
+      </div>
+
+      <div class="accordion" id="accordion">
+        <!-- generato dinamicamente da app.js -->
+      </div>
+
+      <div class="save-bar">
+        <span id="saveStatus" class="save-status"></span>
+        <button id="saveBtn" class="save-btn">Salva modifiche</button>
+      </div>
+    </div>
+  </div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
