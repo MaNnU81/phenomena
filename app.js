@@ -101,7 +101,7 @@ function loadCharacter(characterTab) {
     state.isOwner = res.owner;
     document.getElementById('readOnlyBanner').style.display = state.isOwner ? 'none' : 'block';
     document.getElementById('creationMode').disabled = !state.isOwner;
-    renderHomeSummary();
+    renderHomeSheet();
     renderAccordion();
     renderStickyHeader();
   });
@@ -117,20 +117,124 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ============ HOME SUMMARY (placeholder testuale) ============
-function renderHomeSummary() {
+// ============ HOME SHEET (struttura dati semantica, pronta per lo styling coi token Figma) ============
+function esc(v) {
+  const s = (v ?? '').toString();
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderHomeSheet() {
   const d = state.data;
-  const el = document.getElementById('homeSummary');
-  const a = d.anagrafica.map(r => r[1]);
-  const st = d.statistiche.map(r => r[1]);
-  const der = d.derived;
+  const el = document.getElementById('phSheet');
+
+  const [name, nationality, employer, profession, sex, age, education] = d.anagrafica.map(r => r[1]);
+  const [str_, con_, dex_, int_, pow_, cha_] = d.statistiche.map(r => r[1]);
+  const der = d.derived; // [ [label,max,current], ... ] ordine: Luck,HP,WP,SAN,BP
+
+  // Skills: 44 righe totali, divise in 3 colonne come nel foglio originale (15 / 15 / 14)
+  const skills = d.skills;
+  const col1 = skills.slice(0, 15);
+  const col2 = skills.slice(15, 30);
+  const col3 = skills.slice(30, 44);
+
+  const skillRowHtml = (row) => {
+    const [key, name, stat, base, checked, bonus, total, param] = row;
+    if (!name) return '';
+    const displayName = param ? `${name} (${param})` : name;
+    return `
+      <div class="ph-skill-row">
+        <span class="ph-skill-check">${checked ? '☑' : '☐'}</span>
+        <span class="ph-skill-name">${esc(displayName)}</span>
+        <span class="ph-skill-val ph-skill-base">${esc(base)}</span>
+        <span class="ph-skill-val ph-skill-bonus">${esc(bonus)}</span>
+        <span class="ph-skill-val ph-skill-total">${esc(total)}</span>
+      </div>`;
+  };
+
+  const bondRowHtml = (row) => `
+    <div class="ph-list-row">
+      <span class="ph-list-text">${esc(row[0])}</span>
+      <span class="ph-list-score">${esc(row[1])}</span>
+    </div>`;
+
   el.innerHTML = `
-    <h3>Anagrafica</h3>
-    ${LABELS.anagrafica.map((l,i) => `<div class="row"><span>${l}</span><span>${a[i] || '—'}</span></div>`).join('')}
-    <h3>Statistiche</h3>
-    ${LABELS.statistiche.map((l,i) => `<div class="row"><span>${l}</span><span>${st[i] || '—'}</span></div>`).join('')}
-    <h3>Derived Attributes</h3>
-    ${LABELS.derived.map((l,i) => `<div class="row"><span>${l}</span><span>${der[i][2] ?? '—'} / ${der[i][1] ?? '—'}</span></div>`).join('')}
+    <div class="ph-titlebar">PHENOMENA!</div>
+
+    <div class="ph-block ph-header-block">
+      <div class="ph-row">
+        <div class="ph-field ph-name"><span class="ph-label">Name</span><span class="ph-value">${esc(name)}</span></div>
+        <div class="ph-field ph-nationality"><span class="ph-label">Nationality</span><span class="ph-value">${esc(nationality)}</span></div>
+      </div>
+      <div class="ph-row">
+        <div class="ph-field ph-employer"><span class="ph-label">Employer</span><span class="ph-value">${esc(employer)}</span></div>
+        <div class="ph-field ph-profession"><span class="ph-label">Profession</span><span class="ph-value">${esc(profession)}</span></div>
+      </div>
+      <div class="ph-row">
+        <div class="ph-field ph-sex"><span class="ph-label">Sex</span><span class="ph-value">${esc(sex)}</span></div>
+        <div class="ph-field ph-age"><span class="ph-label">Age</span><span class="ph-value">${esc(age)}</span></div>
+      </div>
+      <div class="ph-field ph-education"><span class="ph-label">Education and Occupational History</span><span class="ph-value">${esc(education)}</span></div>
+    </div>
+
+    <div class="ph-columns">
+      <div class="ph-col ph-col-left">
+        <div class="ph-block ph-statistics">
+          <div class="ph-block-title">Statistics</div>
+          ${[['Strenght (STR)',str_],['Constitution (CON)',con_],['Dexterity (DEX)',dex_],
+             ['Intelligence (INT)',int_],['WillPower (POW)',pow_],['Charisma (CHA)',cha_]]
+            .map(([l,v]) => `<div class="ph-stat-row"><span class="ph-stat-label">${l}</span><span class="ph-stat-score">${esc(v)}</span><span class="ph-stat-x5">${(parseInt(v)||0)*5}</span></div>`).join('')}
+        </div>
+
+        <div class="ph-block ph-derived">
+          <div class="ph-block-title">Derived Attributes</div>
+          <div class="ph-derived-header"><span></span><span>Maximum</span><span>Current</span></div>
+          ${der.map(r => `<div class="ph-derived-row"><span class="ph-derived-label">${esc(r[0])}</span><span class="ph-derived-max">${esc(r[1])}</span><span class="ph-derived-current">${esc(r[2])}</span></div>`).join('')}
+        </div>
+
+        <div class="ph-block ph-violence">
+          <span class="ph-violence-group"><span class="ph-label">Violence</span> ${[0,1,2].map(i => d.violence[i] ? '☑' : '☐').join(' ')}</span>
+          <span class="ph-helplessness-group"><span class="ph-label">Helplessness</span> ${[3,4,5].map(i => d.violence[i] ? '☑' : '☐').join(' ')}</span>
+        </div>
+      </div>
+
+      <div class="ph-col ph-col-right">
+        <div class="ph-block ph-bonds">
+          <div class="ph-block-title">Bonds <span class="ph-block-title-right">Score</span></div>
+          ${d.bonds.map(bondRowHtml).join('')}
+        </div>
+        <div class="ph-block ph-contacts">
+          <div class="ph-block-title">Contacts <span class="ph-block-title-right">Score</span></div>
+          ${d.contacts.map(bondRowHtml).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="ph-block ph-skills">
+      <div class="ph-skills-legend">Accademics/Science: INT or INT+B/3 &nbsp;·&nbsp; Craft/Tech / Pilot: DEX &nbsp;·&nbsp; Language: CHA</div>
+      <div class="ph-skills-columns">
+        <div class="ph-skills-col">${col1.map(skillRowHtml).join('')}</div>
+        <div class="ph-skills-col">${col2.map(skillRowHtml).join('')}</div>
+        <div class="ph-skills-col">${col3.map(skillRowHtml).join('')}</div>
+      </div>
+    </div>
+
+    <div class="ph-block ph-armor-gears">
+      <div class="ph-block-title">Armor and Gears</div>
+      <div class="ph-gear-list">
+        ${d.gear.filter(r => (r[0]??'').toString().trim()).map(r => `<span class="ph-gear-item">${esc(r[0])}</span>`).join('')}
+      </div>
+    </div>
+
+    <div class="ph-block ph-weapons">
+      <div class="ph-weapons-header">
+        <span>Weapon</span><span>Skill%</span><span>Range</span><span>Damage</span>
+        <span>Armor Piercing</span><span>Lethality%</span><span>Kill Radius</span><span>Ammo</span>
+      </div>
+      ${d.weapons.map(row => `
+        <div class="ph-weapons-row">
+          ${row.map(v => `<span>${esc(v)}</span>`).join('')}
+        </div>`).join('')}
+    </div>
   `;
 }
 
