@@ -204,7 +204,7 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
 }
 .acc-head{
   display:flex;align-items:center;justify-content:space-between;
-  padding:13px 16px 13px 46px;cursor:pointer;
+  padding:13px 16px 13px 64px;cursor:pointer;
   font-family:var(--font-type);font-size:13px;color:var(--dossier-ink);
   text-transform:uppercase;letter-spacing:.5px;position:relative;
 }
@@ -212,7 +212,8 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
   content:"F-" counter(filenum,decimal-leading-zero);
   position:absolute;left:14px;top:50%;transform:translateY(-50%);
   font-family:var(--font-mono);font-size:10px;color:var(--dossier-ink);
-  background:var(--dossier-paper);padding:2px 5px;border:1px solid var(--dossier-ink);
+  background:var(--dossier-paper);padding:2px 6px;border:1px solid var(--dossier-ink);
+  white-space:nowrap;
 }
 .acc-head .chev{font-family:var(--font-mono);transition:transform .2s;font-size:12px;color:var(--dossier-ink);}
 .acc-item.open .chev{transform:rotate(90deg);}
