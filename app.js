@@ -165,14 +165,19 @@ function renderHomeSheet() {
 
     <div class="ph-block ph-header-block">
       <div class="ph-anagrafica-layout">
-        <div class="ph-photo-placeholder">
+        <div class="ph-photo-placeholder" id="phPhotoBox">
+          <img src="photos/${encodeURIComponent(state.viewingCharacter)}.jpg"
+               alt="Foto personaggio" class="ph-photo-img"
+               onerror="this.parentElement.innerHTML = document.getElementById('phPhotoFallback').innerHTML;">
+        </div>
+        <template id="phPhotoFallback">
           <svg viewBox="0 0 80 100" class="ph-photo-icon">
             <rect x="1" y="1" width="78" height="98" fill="none" stroke="#000" stroke-width="1"/>
             <circle cx="40" cy="36" r="16" fill="#d9d9d9" stroke="#000"/>
             <path d="M12 92 Q12 60 40 60 Q68 60 68 92 Z" fill="#d9d9d9" stroke="#000"/>
           </svg>
           <span class="ph-photo-label">FOTO</span>
-        </div>
+        </template>
         <div class="ph-anagrafica-fields">
           <div class="ph-row">
             <div class="ph-field ph-name"><span class="ph-label">Name</span><span class="ph-value">${esc(name)}</span></div>

@@ -137,6 +137,7 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
   display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 0;
 }
 .ph-photo-icon{width:56px;height:70px;}
+.ph-photo-img{width:100%;height:100%;object-fit:cover;}
 .ph-photo-label{font-size:8px;color:#777;letter-spacing:1px;margin-top:2px;}
 .ph-anagrafica-fields{flex:1;display:flex;flex-direction:column;justify-content:space-between;}
 .ph-anagrafica-fields .ph-row{margin-bottom:5px;}
