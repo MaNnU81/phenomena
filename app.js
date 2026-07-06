@@ -269,7 +269,7 @@ function renderAccordion() {
   acc.innerHTML = `
 
     <div class="acc-item open">
-      <div class="acc-head" onclick="toggleAcc(this)"><span>👤 Anagrafica</span><span class="chev">▶</span></div>
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Anagrafica</span><span class="chev">▶</span></div>
       <div class="acc-body">
         <div class="field-row">
           ${fieldHtml('anagrafica',1,2,'Nome', d.anagrafica[0][1], true)}
@@ -288,7 +288,7 @@ function renderAccordion() {
     </div>
 
     <div class="acc-item">
-      <div class="acc-head" onclick="toggleAcc(this)"><span>📊 Statistiche</span><span class="chev">▶</span></div>
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Statistiche</span><span class="chev">▶</span></div>
       <div class="acc-body">
         <div class="field-row">
           ${LABELS.statistiche.slice(0,3).map((l,i) => fieldHtml('statistiche',i+1,2,l,d.statistiche[i][1],true)).join('')}
@@ -316,7 +316,7 @@ function renderAccordion() {
     </div>
 
     <div class="acc-item">
-      <div class="acc-head" onclick="toggleAcc(this)"><span>🤝 Bonds &amp; Contacts</span><span class="chev">▶</span></div>
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Bonds &amp; Contacts</span><span class="chev">▶</span></div>
       <div class="acc-body">
         <div class="skill-cat">Bonds</div>
         ${d.bonds.map((row,i) => `
@@ -340,7 +340,7 @@ function renderAccordion() {
     </div>
 
     <div class="acc-item">
-      <div class="acc-head" onclick="toggleAcc(this)"><span>🎯 Skills</span><span class="chev">▶</span></div>
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Skills</span><span class="chev">▶</span></div>
       <div class="acc-body">
         <div class="skill-header-row"><span></span><span>Skill</span><span>Base</span><span>Bonus</span><span>Tot.</span></div>
         ${d.skills.map((row,i) => {
@@ -359,7 +359,7 @@ function renderAccordion() {
     </div>
 
     <div class="acc-item">
-      <div class="acc-head" onclick="toggleAcc(this)"><span>🔫 Weapons</span><span class="chev">▶</span></div>
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Weapons</span><span class="chev">▶</span></div>
       <div class="acc-body">
         <table class="weapon-table">
           <tr><th>Weapon</th><th>Skill%</th><th>Range</th><th>Dmg</th><th>AP</th><th>Leth%</th><th>Kill R.</th><th>Ammo</th></tr>
@@ -373,7 +373,7 @@ function renderAccordion() {
     </div>
 
     <div class="acc-item">
-      <div class="acc-head" onclick="toggleAcc(this)"><span>🎒 Armor and Gears</span><span class="chev">▶</span></div>
+      <div class="acc-head" onclick="toggleAcc(this)"><span>Armor and Gears</span><span class="chev">▶</span></div>
       <div class="acc-body">
         <div class="gear-list" id="gearList">
           ${d.gear.map((row,i) => (row[0] ?? '').toString().trim() !== '' ? `
