@@ -82,13 +82,35 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
 .view{flex:1;overflow-y:auto;display:none;}
 .view.active{display:block;}
 
-/* ---------- HOME: token ESATTI da Figma (font Oswald, palette B/N/grigio) ---------- */
+/* ---------- HOME: token Figma + cornice "fascicolo segreto" ---------- */
 #home-view{background:#1c1c1c;}
 .sheet-hint{text-align:center;color:#888;font-size:11px;padding:10px 0 4px;font-family:Arial, sans-serif;}
 
+.ph-dossier-frame{
+  max-width:600px;margin:0 auto 40px;position:relative;
+  background:
+    repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0px, rgba(0,0,0,.04) 1px, transparent 1px, transparent 3px),
+    var(--dossier-kraft);
+  border:1px solid var(--dossier-kraft-dark);
+  padding:34px 10px 18px;
+}
+.ph-file-tab{
+  position:absolute;top:-14px;left:16px;background:var(--dossier-ink);color:var(--dossier-kraft);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:1px;padding:5px 12px;
+  border:1px solid var(--dossier-kraft);text-transform:uppercase;
+}
+.ph-stamp{
+  position:absolute;top:8px;right:14px;
+  font-family:var(--font-type);font-size:13px;color:var(--dossier-stamp);
+  border:2.5px solid var(--dossier-stamp);border-radius:3px;padding:3px 10px;
+  transform:rotate(-9deg);letter-spacing:2px;opacity:.85;
+  mix-blend-mode:multiply;
+}
+
 .ph-sheet{
-  max-width:600px;margin:0 auto 40px;background:var(--ph-white);color:#000;
+  background:var(--ph-white);color:#000;
   font-family:var(--ph-font);border:1px solid var(--ph-border);
+  box-shadow:0 10px 26px rgba(0,0,0,.4);
 }
 .ph-titlebar{
   background:var(--ph-ink);color:var(--ph-white);text-align:center;
@@ -108,37 +130,61 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
 .ph-label{display:block;font-size:9px;font-weight:400;color:#333;}
 .ph-value{display:block;font-size:12px;min-height:14px;}
 
-.ph-columns{display:flex;gap:0;margin:8px;}
-.ph-col{flex:1;}
-.ph-col .ph-block{margin:0 0 8px;}
-.ph-col-right{display:flex;flex-direction:column;}
+/* foto + campi anagrafica affiancati */
+.ph-anagrafica-layout{display:flex;gap:8px;margin-bottom:6px;}
+.ph-photo-placeholder{
+  width:80px;flex-shrink:0;border:1px dashed #666;background:#fafafa;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 0;
+}
+.ph-photo-icon{width:56px;height:70px;}
+.ph-photo-label{font-size:8px;color:#777;letter-spacing:1px;margin-top:2px;}
+.ph-anagrafica-fields{flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+.ph-anagrafica-fields .ph-row{margin-bottom:5px;}
+.ph-anagrafica-fields .ph-row:last-child{margin-bottom:0;}
 
-.ph-stat-row, .ph-derived-row{
-  display:grid;grid-template-columns:1fr 40px 40px;gap:6px;font-size:11px;
+/* box valore con bordino leggero, riutilizzato ovunque (score, x5, max/current, bonds score...) */
+.ph-valbox{
+  display:inline-block;min-width:26px;text-align:center;
+  border:1px solid rgba(0,0,0,.35);background:var(--ph-white);
+  padding:1px 5px;font-size:11px;margin-left:2px;
+}
+
+.ph-stat-row{
+  display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;font-size:11px;
   padding:3px 4px;border-bottom:1px solid var(--ph-border);background:var(--ph-field);
 }
-.ph-derived-header{
-  display:grid;grid-template-columns:1fr 40px 40px;gap:6px;font-size:9px;
-  font-weight:400;color:#000;padding-bottom:2px;background:var(--ph-header);padding:3px 4px;
+.ph-derived-row{
+  display:grid;grid-template-columns:1fr 55px 55px;gap:6px;align-items:center;font-size:11px;
+  padding:3px 4px;border-bottom:1px solid var(--ph-border);background:var(--ph-field);
 }
-.ph-derived-row{grid-template-columns:1fr 50px 50px;}
+.ph-derived-header-row{
+  font-weight:500;font-size:9px;background:var(--ph-header);border-bottom:1px solid var(--ph-border);
+}
+.ph-derived-header-row span:nth-child(2), .ph-derived-header-row span:nth-child(3){text-align:center;}
+.ph-derived-row .ph-valbox{width:100%;box-sizing:border-box;text-align:center;margin-left:0;}
 
-.ph-violence{display:flex;justify-content:space-between;font-size:11px;background:var(--ph-field);}
+.ph-violence{display:flex;justify-content:space-between;font-size:11px;background:var(--ph-field);padding:4px 6px;border:1px solid var(--ph-border);}
 
 .ph-list-row{
-  display:flex;justify-content:space-between;font-size:11px;padding:3px 4px;border-bottom:1px solid var(--ph-border);
-  min-height:14px;background:var(--ph-field);
+  display:flex;justify-content:space-between;align-items:center;font-size:11px;padding:3px 4px;
+  border-bottom:1px solid var(--ph-border);min-height:14px;background:var(--ph-field);
 }
-.ph-list-score{font-weight:400;background:var(--ph-white);padding:0 4px;}
 
+/* skills: tre colonne con bordo/tinta distinti */
 .ph-skills-legend{font-size:7px;color:#000;margin-bottom:6px;}
-.ph-skills-columns{display:flex;gap:8px;}
-.ph-skills-col{flex:1;}
+.ph-skills-columns{display:flex;flex-direction:column;gap:10px;}
+@media (min-width:520px){ .ph-skills-columns{flex-direction:row;} }
+.ph-skills-col{
+  flex:1;border:1px solid rgba(0,0,0,.5);padding:4px;
+}
+.ph-skills-col-1{background:rgba(217,217,217,.25);}
+.ph-skills-col-2{background:rgba(179,179,179,.2);}
+.ph-skills-col-3{background:rgba(217,217,217,.35);}
 .ph-skill-row{
   display:grid;grid-template-columns:14px 1fr 22px 20px 20px 20px;gap:3px;align-items:center;
-  font-size:9.5px;padding:2px 3px;border-bottom:1px solid var(--ph-border);background:var(--ph-field);
+  font-size:9.5px;padding:2px 3px;border-bottom:1px solid rgba(0,0,0,.25);
 }
-.ph-skill-val{text-align:center;background:var(--ph-field);}
+.ph-skill-val{text-align:center;border:1px solid rgba(0,0,0,.3);background:var(--ph-white);padding:1px;}
 .ph-skill-chip{
   background:var(--ph-chip);border:0.6px solid var(--ph-border);text-align:center;
   font-size:8px;padding:1px 2px;
@@ -157,11 +203,8 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
 .ph-armor-gears .ph-block-title{background:var(--ph-ink);color:var(--ph-white);}
 
 @media (max-width:480px){
-  .ph-columns{flex-direction:column;}
-  .ph-skills-columns{flex-direction:column;}
   .ph-weapons-header, .ph-weapons-row{font-size:7.5px;}
 }
-
 /* ================= EDIT VIEW — DOSSIER / CASE FILE THEME ================= */
 #edit-view{
   background:
