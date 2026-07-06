@@ -429,7 +429,7 @@ function clearGearRow(btn, row) {
 // ============ CREATION MODE ============
 document.getElementById('creationMode').addEventListener('change', function () {
   state.creationMode = this.checked;
-  document.getElementById('modeBadge').textContent = state.creationMode ? 'MODALITÀ CREAZIONE' : 'MODALITÀ GIOCO';
+  document.getElementById('modeBadge').textContent = state.creationMode ? 'ACCESSO COMPLETO' : 'SOLO CONSULTAZIONE';
   document.getElementById('modeBadge').className = 'mode-badge ' + (state.creationMode ? 'creation' : 'game');
   renderAccordion(); // ri-renderizza per sbloccare/bloccare i campi
 });
