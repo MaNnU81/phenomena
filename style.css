@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Oswald:wght@400;500;600&display=swap');
 
 :root{
   --ink:#111111;
@@ -7,6 +7,15 @@
   --line:#b9ad8a;
   --accent:#8a1f1f;
   --muted:#6b6455;
+
+  /* ---- Home sheet: token ESATTI da Figma (CSS export) ---- */
+  --ph-ink:#111111;
+  --ph-field:#F7F7F5;
+  --ph-header:#D9D9D9;
+  --ph-chip:#B3B3B3;
+  --ph-border:#000000;
+  --ph-white:#FFFFFF;
+  --ph-font:'Oswald', Arial, sans-serif;
 
   /* ---- Dossier theme (scheda editabile) ---- */
   --dossier-kraft:#c7a76c;
@@ -73,31 +82,30 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
 .view{flex:1;overflow-y:auto;display:none;}
 .view.active{display:block;}
 
-/* ---------- HOME: struttura dati "ph-*" pronta per i design token Figma ----------
-   Layout neutro funzionale ora; qui sotto verranno sostituiti colori/font/spaziature
-   esatti una volta recuperati i token dal file Figma. Non toccare le classi, solo i valori. */
+/* ---------- HOME: token ESATTI da Figma (font Oswald, palette B/N/grigio) ---------- */
 #home-view{background:#1c1c1c;}
-.sheet-hint{text-align:center;color:#888;font-size:11px;padding:10px 0 4px;}
+.sheet-hint{text-align:center;color:#888;font-size:11px;padding:10px 0 4px;font-family:Arial, sans-serif;}
 
 .ph-sheet{
-  max-width:600px;margin:0 auto 40px;background:var(--paper);color:var(--ink);
-  font-family:Arial, sans-serif;border:1px solid var(--line);
+  max-width:600px;margin:0 auto 40px;background:var(--ph-white);color:#000;
+  font-family:var(--ph-font);border:1px solid var(--ph-border);
 }
 .ph-titlebar{
-  background:var(--ink);color:var(--paper);text-align:center;
-  font-family:Georgia,serif;font-size:20px;font-weight:700;letter-spacing:2px;
-  padding:8px 0;
+  background:var(--ph-ink);color:var(--ph-white);text-align:center;
+  font-size:26px;font-weight:400;letter-spacing:1px;
+  padding:10px 0;
+  text-shadow:0 4px 4px rgba(0,0,0,.25);
 }
-.ph-block{border:1px solid var(--ink);margin:8px;padding:8px;background:var(--paper-dark);}
+.ph-block{border:1px solid var(--ph-border);margin:8px;padding:8px;background:var(--ph-white);}
 .ph-block-title{
-  font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;
-  margin:-8px -8px 6px;padding:5px 8px;background:var(--ink);color:var(--paper);
-  display:flex;justify-content:space-between;
+  font-weight:400;font-size:12px;
+  margin:-8px -8px 6px;padding:5px 8px;background:var(--ph-header);color:#000;
+  display:flex;justify-content:space-between;border-bottom:1px solid var(--ph-border);
 }
-.ph-header-block{background:var(--paper);}
+.ph-header-block{background:var(--ph-white);}
 .ph-row{display:flex;gap:8px;margin-bottom:6px;}
-.ph-field{flex:1;border:1px solid var(--ink);padding:4px 6px;}
-.ph-label{display:block;font-size:9px;font-weight:700;color:var(--muted);}
+.ph-field{flex:1;border:1px solid var(--ph-border);padding:4px 6px;background:var(--ph-field);}
+.ph-label{display:block;font-size:9px;font-weight:400;color:#333;}
 .ph-value{display:block;font-size:12px;min-height:14px;}
 
 .ph-columns{display:flex;gap:0;margin:8px;}
@@ -107,39 +115,46 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
 
 .ph-stat-row, .ph-derived-row{
   display:grid;grid-template-columns:1fr 40px 40px;gap:6px;font-size:11px;
-  padding:2px 0;border-bottom:1px solid #ddd3b8;
+  padding:3px 4px;border-bottom:1px solid var(--ph-border);background:var(--ph-field);
 }
 .ph-derived-header{
   display:grid;grid-template-columns:1fr 40px 40px;gap:6px;font-size:9px;
-  font-weight:700;color:var(--muted);padding-bottom:2px;
+  font-weight:400;color:#000;padding-bottom:2px;background:var(--ph-header);padding:3px 4px;
 }
 .ph-derived-row{grid-template-columns:1fr 50px 50px;}
 
-.ph-violence{display:flex;justify-content:space-between;font-size:11px;background:var(--paper);}
+.ph-violence{display:flex;justify-content:space-between;font-size:11px;background:var(--ph-field);}
 
 .ph-list-row{
-  display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid #ddd3b8;
-  min-height:14px;
+  display:flex;justify-content:space-between;font-size:11px;padding:3px 4px;border-bottom:1px solid var(--ph-border);
+  min-height:14px;background:var(--ph-field);
 }
-.ph-list-score{font-weight:700;}
+.ph-list-score{font-weight:400;background:var(--ph-white);padding:0 4px;}
 
-.ph-skills-legend{font-size:9px;color:var(--muted);margin-bottom:6px;}
+.ph-skills-legend{font-size:7px;color:#000;margin-bottom:6px;}
 .ph-skills-columns{display:flex;gap:8px;}
 .ph-skills-col{flex:1;}
 .ph-skill-row{
-  display:grid;grid-template-columns:14px 1fr 20px 20px 20px;gap:3px;align-items:center;
-  font-size:9.5px;padding:2px 0;border-bottom:1px solid #ddd3b8;
+  display:grid;grid-template-columns:14px 1fr 22px 20px 20px 20px;gap:3px;align-items:center;
+  font-size:9.5px;padding:2px 3px;border-bottom:1px solid var(--ph-border);background:var(--ph-field);
 }
-.ph-skill-val{text-align:center;}
+.ph-skill-val{text-align:center;background:var(--ph-field);}
+.ph-skill-chip{
+  background:var(--ph-chip);border:0.6px solid var(--ph-border);text-align:center;
+  font-size:8px;padding:1px 2px;
+}
+.ph-skill-chip-empty{background:transparent;border:none;color:#999;}
 
 .ph-gear-list{display:flex;flex-wrap:wrap;gap:6px;}
-.ph-gear-item{background:var(--paper);border:1px solid var(--ink);padding:2px 8px;font-size:11px;border-radius:3px;}
+.ph-gear-item{background:var(--ph-field);border:1px solid var(--ph-border);padding:2px 8px;font-size:11px;}
 
 .ph-weapons-header, .ph-weapons-row{
   display:grid;grid-template-columns:1.3fr 0.7fr 0.9fr 0.8fr 1fr 0.9fr 0.9fr 1fr;
-  gap:4px;font-size:9px;text-align:center;padding:3px 0;border-bottom:1px solid #ddd3b8;
+  gap:4px;font-size:9px;text-align:center;padding:3px 0;border-bottom:1px solid var(--ph-border);
 }
-.ph-weapons-header{font-weight:700;color:var(--muted);}
+.ph-weapons-header{font-weight:400;background:var(--ph-header);}
+.ph-weapons-row{background:var(--ph-field);}
+.ph-armor-gears .ph-block-title{background:var(--ph-ink);color:var(--ph-white);}
 
 @media (max-width:480px){
   .ph-columns{flex-direction:column;}

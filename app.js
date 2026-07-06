@@ -141,10 +141,12 @@ function renderHomeSheet() {
     const [key, name, stat, base, checked, bonus, total, param] = row;
     if (!name) return '';
     const displayName = param ? `${name} (${param})` : name;
+    const chip = stat ? `<span class="ph-skill-chip">${esc(stat)}</span>` : '<span class="ph-skill-chip ph-skill-chip-empty">—</span>';
     return `
       <div class="ph-skill-row">
         <span class="ph-skill-check">${checked ? '☑' : '☐'}</span>
         <span class="ph-skill-name">${esc(displayName)}</span>
+        ${chip}
         <span class="ph-skill-val ph-skill-base">${esc(base)}</span>
         <span class="ph-skill-val ph-skill-bonus">${esc(bonus)}</span>
         <span class="ph-skill-val ph-skill-total">${esc(total)}</span>
