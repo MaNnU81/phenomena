@@ -145,7 +145,7 @@ function renderHomeSheet() {
     const chip = stat ? `<span class="ph-skill-chip">${esc(stat)}</span>` : '<span class="ph-skill-chip ph-skill-chip-empty">—</span>';
     return `
       <div class="ph-skill-row">
-        <span class="ph-skill-check">${checked ? '☑' : '☐'}</span>
+        <span class="ph-skill-check ${checked ? 'ph-check-on' : ''}">${checked ? '☑' : '☐'}</span>
         <span class="ph-skill-name">${esc(displayName)}</span>
         ${chip}
         <span class="ph-skill-val ph-skill-base">${esc(base)}</span>
@@ -200,6 +200,7 @@ function renderHomeSheet() {
 
     <div class="ph-block ph-statistics">
       <div class="ph-block-title">Statistics</div>
+      <div class="ph-stat-row ph-stat-header-row"><span></span><span>Score</span><span>X 5</span></div>
       ${[['Strenght (STR)',str_],['Constitution (CON)',con_],['Dexterity (DEX)',dex_],
          ['Intelligence (INT)',int_],['WillPower (POW)',pow_],['Charisma (CHA)',cha_]]
         .map(([l,v]) => `<div class="ph-stat-row"><span class="ph-stat-label">${l}</span>${val(v)}${val((parseInt(v)||0)*5)}</div>`).join('')}
@@ -212,8 +213,8 @@ function renderHomeSheet() {
     </div>
 
     <div class="ph-block ph-violence">
-      <span class="ph-violence-group"><span class="ph-label">Violence</span> ${[0,1,2].map(i => d.violence[i] ? '☑' : '☐').join(' ')}</span>
-      <span class="ph-helplessness-group"><span class="ph-label">Helplessness</span> ${[3,4,5].map(i => d.violence[i] ? '☑' : '☐').join(' ')}</span>
+      <span class="ph-violence-group"><span class="ph-label">Violence</span> ${[0,1,2].map(i => `<span class="ph-vh-check ${d.violence[i] ? 'ph-check-on-green' : ''}">${d.violence[i] ? '☑' : '☐'}</span>`).join(' ')}</span>
+      <span class="ph-helplessness-group"><span class="ph-label">Helplessness</span> ${[3,4,5].map(i => `<span class="ph-vh-check ${d.violence[i] ? 'ph-check-on-green' : ''}">${d.violence[i] ? '☑' : '☐'}</span>`).join(' ')}</span>
     </div>
 
     <div class="ph-block ph-skills">
