@@ -123,6 +123,9 @@ function esc(v) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 const val = (v) => `<span class="ph-valbox">${esc(v)}</span>`;
+function isChecked(v) {
+  return v === true || v === 'TRUE' || v === 'true' || v === 1;
+}
 
 function renderHomeSheet() {
   const d = state.data;
@@ -141,11 +144,12 @@ function renderHomeSheet() {
   const skillRowHtml = (row) => {
     const [key, name, stat, base, checked, bonus, total, param] = row;
     if (!name) return '';
+    const isOn = isChecked(checked);
     const displayName = param ? `${name} (${param})` : name;
     const chip = stat ? `<span class="ph-skill-chip">${esc(stat)}</span>` : '<span class="ph-skill-chip ph-skill-chip-empty">—</span>';
     return `
       <div class="ph-skill-row">
-        <span class="ph-skill-check ${checked ? 'ph-check-on' : ''}">${checked ? '☑' : '☐'}</span>
+        <span class="ph-skill-check ${isOn ? 'ph-check-on' : ''}">${isOn ? '☑' : '☐'}</span>
         <span class="ph-skill-name">${esc(displayName)}</span>
         ${chip}
         <span class="ph-skill-val ph-skill-base">${esc(base)}</span>
@@ -213,8 +217,8 @@ function renderHomeSheet() {
     </div>
 
     <div class="ph-block ph-violence">
-      <span class="ph-violence-group"><span class="ph-label">Violence</span> ${[0,1,2].map(i => `<span class="ph-vh-check ${d.violence[i] ? 'ph-check-on-green' : ''}">${d.violence[i] ? '☑' : '☐'}</span>`).join(' ')}</span>
-      <span class="ph-helplessness-group"><span class="ph-label">Helplessness</span> ${[3,4,5].map(i => `<span class="ph-vh-check ${d.violence[i] ? 'ph-check-on-green' : ''}">${d.violence[i] ? '☑' : '☐'}</span>`).join(' ')}</span>
+      <span class="ph-violence-group"><span class="ph-label">Violence</span> ${[0,1,2].map(i => `<span class="ph-vh-check ${isChecked(d.violence[i]) ? 'ph-check-on-green' : ''}">${isChecked(d.violence[i]) ? '☑' : '☐'}</span>`).join(' ')}</span>
+      <span class="ph-helplessness-group"><span class="ph-label">Helplessness</span> ${[3,4,5].map(i => `<span class="ph-vh-check ${isChecked(d.violence[i]) ? 'ph-check-on-green' : ''}">${isChecked(d.violence[i]) ? '☑' : '☐'}</span>`).join(' ')}</span>
     </div>
 
     <div class="ph-block ph-skills">
@@ -324,11 +328,11 @@ function renderAccordion() {
         <div class="field-row">
           <div class="field">
             <label>Violence</label>
-            ${[2,3,4].map(c => `<input type="checkbox" data-block="violence" data-row="1" data-col="${c}" ${d.violence[c-2]?'checked':''} ${state.isOwner?'':'disabled'}>`).join(' ')}
+            ${[2,3,4].map(c => `<input type="checkbox" data-block="violence" data-row="1" data-col="${c}" ${isChecked(d.violence[c-2])?'checked':''} ${state.isOwner?'':'disabled'}>`).join(' ')}
           </div>
           <div class="field">
             <label>Helplessness</label>
-            ${[6,7,8].map(c => `<input type="checkbox" data-block="violence" data-row="1" data-col="${c}" ${d.violence[c-3]?'checked':''} ${state.isOwner?'':'disabled'}>`).join(' ')}
+            ${[6,7,8].map(c => `<input type="checkbox" data-block="violence" data-row="1" data-col="${c}" ${isChecked(d.violence[c-3])?'checked':''} ${state.isOwner?'':'disabled'}>`).join(' ')}
           </div>
         </div>
       </div>
@@ -367,7 +371,7 @@ function renderAccordion() {
           const displayName = param ? `${name} (${param})` : name;
           return `
           <div class="skill-row">
-            <input type="checkbox" data-block="skills" data-row="${i+1}" data-col="5" ${checked?'checked':''} ${state.isOwner?'':'disabled'}>
+            <input type="checkbox" data-block="skills" data-row="${i+1}" data-col="5" ${isChecked(checked)?'checked':''} ${state.isOwner?'':'disabled'}>
             <span class="skill-name">${displayName} <small>${stat?('('+stat+')'):''}</small></span>
             <input class="num" disabled value="${base ?? ''}">
             <input class="num" value="${bonus ?? ''}" data-block="skills" data-row="${i+1}" data-col="6" ${state.isOwner?'':'disabled'}>
