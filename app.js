@@ -149,7 +149,7 @@ function renderHomeSheet() {
     const chip = stat ? `<span class="ph-skill-chip">${esc(stat)}</span>` : '<span class="ph-skill-chip ph-skill-chip-empty">—</span>';
     return `
       <div class="ph-skill-row">
-        <span class="ph-skill-check ${isOn ? 'ph-check-on' : ''}">${isOn ? '☑' : '☐'}</span>
+        <span class="ph-checkbox-box ${isOn ? 'on' : ''}"></span>
         <span class="ph-skill-name">${esc(displayName)}</span>
         ${chip}
         <span class="ph-skill-val ph-skill-base">${esc(base)}</span>
@@ -217,8 +217,8 @@ function renderHomeSheet() {
     </div>
 
     <div class="ph-block ph-violence">
-      <span class="ph-violence-group"><span class="ph-label">Violence</span> ${[0,1,2].map(i => `<span class="ph-vh-check ${isChecked(d.violence[i]) ? 'ph-check-on-green' : ''}">${isChecked(d.violence[i]) ? '☑' : '☐'}</span>`).join(' ')}</span>
-      <span class="ph-helplessness-group"><span class="ph-label">Helplessness</span> ${[3,4,5].map(i => `<span class="ph-vh-check ${isChecked(d.violence[i]) ? 'ph-check-on-green' : ''}">${isChecked(d.violence[i]) ? '☑' : '☐'}</span>`).join(' ')}</span>
+      <span class="ph-violence-group"><span class="ph-label">Violence</span> ${[0,1,2].map(i => `<span class="ph-checkbox-box ph-checkbox-green ${isChecked(d.violence[i]) ? 'on' : ''}"></span>`).join(' ')}</span>
+      <span class="ph-helplessness-group"><span class="ph-label">Helplessness</span> ${[3,4,5].map(i => `<span class="ph-checkbox-box ph-checkbox-green ${isChecked(d.violence[i]) ? 'on' : ''}"></span>`).join(' ')}</span>
     </div>
 
     <div class="ph-block ph-skills">

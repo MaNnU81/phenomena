@@ -203,10 +203,16 @@ html,body{margin:0;padding:0;height:100%;background:#1c1c1c;font-family:Arial, s
   font-size:11.5px;padding:4px 4px;border-bottom:1px solid rgba(0,0,0,.2);
 }
 .ph-skill-val{text-align:center;border:1px solid rgba(0,0,0,.3);background:var(--ph-white);padding:2px;border-radius:3px;}
-.ph-skill-check{font-size:13px;}
-.ph-skill-check.ph-check-on{color:#c81e1e;font-weight:700;}
-.ph-vh-check{font-size:14px;display:inline-block;}
-.ph-vh-check.ph-check-on-green{color:#1f7a2e;font-weight:700;}
+.ph-checkbox-box{
+  width:15px;height:15px;border:1.5px solid #000;display:inline-block;position:relative;
+  background:#fff;vertical-align:middle;flex-shrink:0;box-sizing:border-box;
+}
+.ph-checkbox-box.on{background:#c81e1e;border-color:#c81e1e;}
+.ph-checkbox-box.on::after{
+  content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);
+}
+.ph-checkbox-box.ph-checkbox-green.on{background:#1f7a2e;border-color:#1f7a2e;}
 .ph-skill-chip{
   background:var(--ph-chip);border:0.6px solid var(--ph-border);text-align:center;border-radius:3px;
   font-size:9.5px;padding:2px 3px;
