@@ -366,6 +366,7 @@ input[type=checkbox][data-block="violence"]{width:16px;height:16px;accent-color:
   font-size:12px;font-family:var(--font-mono);background:#fdfbf4;
 }
 .skill-name small{color:#8a7f65;font-family:var(--font-mono);}
+.skill-hint{opacity:.45;font-style:italic;font-size:.9em;}
 .skill-spec-row{
   display:flex;align-items:center;gap:8px;padding:3px 0 8px 30px;font-size:11px;
   border-bottom:1px dotted var(--dossier-kraft-dark);

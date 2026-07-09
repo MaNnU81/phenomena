@@ -145,12 +145,12 @@ function renderHomeSheet() {
     const [key, name, stat, base, checked, bonus, total, param] = row;
     if (!name) return '';
     const isOn = isChecked(checked);
-    const displayName = param ? `${name} (${param})` : name;
+    const displayName = formatSkillName(name, param, esc);
     const chip = stat ? `<span class="ph-skill-chip">${esc(stat)}</span>` : '<span class="ph-skill-chip ph-skill-chip-empty">—</span>';
     return `
       <div class="ph-skill-row">
         <span class="ph-checkbox-box ${isOn ? 'on' : ''}"></span>
-        <span class="ph-skill-name">${esc(displayName)}</span>
+        <span class="ph-skill-name">${displayName}</span>
         ${chip}
         <span class="ph-skill-val ph-skill-base">${esc(base)}</span>
         <span class="ph-skill-val ph-skill-bonus">${esc(bonus)}</span>
@@ -278,6 +278,14 @@ function isParametric(name) {
   if (!name) return false;
   return /^(Academics|Science)/.test(name) || ['Craft/Tech','Language','Pilot'].includes(name);
 }
+function formatSkillName(name, param, escapeFn) {
+  const e = escapeFn || ((x) => x);
+  const hintMatch = (name || '').match(/\s*\(derivata 2\/3\)\s*$/i);
+  const baseName = hintMatch ? name.slice(0, hintMatch.index).trim() : name;
+  const specPart = param ? ` (${e(param)})` : '';
+  const hintPart = hintMatch ? ` <span class="skill-hint">(derivata 2/3)</span>` : '';
+  return `${e(baseName)}${specPart}${hintPart}`;
+}
 function toggleAcc(head) { head.parentElement.classList.toggle('open'); }
 
 function fieldHtml(block, row, col, label, value, lockedUnlessCreation) {
@@ -377,7 +385,7 @@ function renderAccordion() {
           return `
           <div class="skill-row ${parametric ? 'skill-row-parametric' : ''}">
             <input type="checkbox" data-block="skills" data-row="${i+1}" data-col="5" ${isChecked(checked)?'checked':''} ${state.isOwner?'':'disabled'}>
-            <span class="skill-name">${name} <small>${stat?('('+stat+')'):''}</small></span>
+            <span class="skill-name">${formatSkillName(name, param, esc)} <small>${stat?('('+stat+')'):''}</small></span>
             <input class="num" disabled value="${base ?? ''}">
             <input class="num" value="${bonus ?? ''}" data-block="skills" data-row="${i+1}" data-col="6" ${state.isOwner?'':'disabled'}>
             <input class="num" disabled value="${total ?? ''}">
