@@ -274,6 +274,10 @@ function renderStickyHeader() {
 }
 
 // ============ ACCORDION ============
+function isParametric(name) {
+  if (!name) return false;
+  return /^(Academics|Science)/.test(name) || ['Craft/Tech','Language','Pilot'].includes(name);
+}
 function toggleAcc(head) { head.parentElement.classList.toggle('open'); }
 
 function fieldHtml(block, row, col, label, value, lockedUnlessCreation) {
@@ -368,15 +372,22 @@ function renderAccordion() {
         <div class="skill-header-row"><span></span><span>Skill</span><span>Base</span><span>Bonus</span><span>Tot.</span></div>
         ${d.skills.map((row,i) => {
           const [key,name,stat,base,checked,bonus,total,param] = row;
-          const displayName = param ? `${name} (${param})` : name;
+          const parametric = isParametric(name);
+          const specDisabled = !state.creationMode || !state.isOwner;
           return `
-          <div class="skill-row">
+          <div class="skill-row ${parametric ? 'skill-row-parametric' : ''}">
             <input type="checkbox" data-block="skills" data-row="${i+1}" data-col="5" ${isChecked(checked)?'checked':''} ${state.isOwner?'':'disabled'}>
-            <span class="skill-name">${displayName} <small>${stat?('('+stat+')'):''}</small></span>
+            <span class="skill-name">${name} <small>${stat?('('+stat+')'):''}</small></span>
             <input class="num" disabled value="${base ?? ''}">
             <input class="num" value="${bonus ?? ''}" data-block="skills" data-row="${i+1}" data-col="6" ${state.isOwner?'':'disabled'}>
             <input class="num" disabled value="${total ?? ''}">
-          </div>`;
+          </div>
+          ${parametric ? `
+          <div class="skill-spec-row">
+            <label>Specializzazione</label>
+            <input type="text" placeholder="es. Legge, Chimica, Auto..." value="${param ?? ''}"
+              data-block="skills" data-row="${i+1}" data-col="8" ${specDisabled ? 'disabled' : ''}>
+          </div>` : ''}`;
         }).join('')}
       </div>
     </div>

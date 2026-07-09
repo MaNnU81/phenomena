@@ -366,6 +366,19 @@ input[type=checkbox][data-block="violence"]{width:16px;height:16px;accent-color:
   font-size:12px;font-family:var(--font-mono);background:#fdfbf4;
 }
 .skill-name small{color:#8a7f65;font-family:var(--font-mono);}
+.skill-spec-row{
+  display:flex;align-items:center;gap:8px;padding:3px 0 8px 30px;font-size:11px;
+  border-bottom:1px dotted var(--dossier-kraft-dark);
+}
+.skill-spec-row label{
+  color:var(--dossier-green);font-family:var(--font-mono);text-transform:uppercase;
+  letter-spacing:.5px;font-size:9.5px;flex-shrink:0;
+}
+.skill-spec-row input{
+  flex:1;padding:3px 6px;border:1px solid var(--dossier-kraft-dark);font-size:11px;
+  font-family:var(--font-body);background:#fdfbf4;
+}
+.skill-spec-row input:disabled{background:#e3dbc4;color:#4a4438;font-style:italic;cursor:not-allowed;}
 
 .weapon-table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:8px;font-family:var(--font-mono);}
 .weapon-table th,.weapon-table td{border:1px solid var(--dossier-kraft-dark);padding:5px;text-align:center;}
